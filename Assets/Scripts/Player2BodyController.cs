@@ -10,10 +10,13 @@ public class Player2BodyController : MonoBehaviour
     private float moveHorizontal;
     private float moveVertical;
     private int damageTaken = 0;
+    private Player1GloveController player1Glove;
+
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        player1Glove = GameObject.FindObjectOfType<Player1GloveController>();
     }
 
     // Update is called once per frame
@@ -30,6 +33,14 @@ public class Player2BodyController : MonoBehaviour
         moveVertical = Input.GetAxis("P2_vertical");
 
         rb.AddForce(moveHorizontal * speed, 0, moveVertical * speed);
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player1_glove")
+        {
+            Debug.Log("enter");
+            takeDamage(player1Glove.GetPunchVector());
+        }
     }
     public Vector3 GetMovement()
     {
