@@ -108,6 +108,56 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &466479960
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1424711891}
+    m_Modifications:
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954737743815428, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 75
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: abaaf9ce2e17c26408baa086ccf0ac52, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &534545051
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +293,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 329e72ff690e9954badbe4da8ab92e4a, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1424711891 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4017641546268984, guid: 11e839ca2171f9144b641c20eadb69b6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1603420756}
 --- !u!1001 &1430747266
 Prefab:
   m_ObjectHideFlags: 0
