@@ -9,6 +9,7 @@ public class Player1BodyController : MonoBehaviour
     public int forceConst;
     private float moveHorizontal;
     private float moveVertical;
+    private int damageTaken = 0;
 
     private bool canJump;
     // Use this for initialization
@@ -36,7 +37,15 @@ public class Player1BodyController : MonoBehaviour
     {
         return new Vector3(moveHorizontal, 0, moveVertical);
     }
-    private void Jump() {
-            rb.AddForce(0, forceConst, 0, ForceMode.Impulse);
+    private void Jump()
+    {
+        rb.AddForce(0, forceConst, 0, ForceMode.Impulse);
+    }
+
+    public void takeDamage(Vector3 punchDir)
+    {
+        Debug.Log("damage on p1");
+        damageTaken += 3;
+        rb.AddForce(punchDir.x * damageTaken, 0, punchDir.z * damageTaken);
     }
 }

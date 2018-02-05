@@ -9,6 +9,7 @@ public class Player2GloveController : MonoBehaviour
     public Vector3 offset;
 
     private Player2BodyController player2BodyCtrl;
+    private Player1BodyController player1BodyCtrl;
     private GameObject player2Body;
     private bool punching = false;
     private Vector3 oldMovement;
@@ -16,10 +17,10 @@ public class Player2GloveController : MonoBehaviour
     void Start()
     {
         player2BodyCtrl = GameObject.FindObjectOfType<Player2BodyController>();
+        player1BodyCtrl = GameObject.FindObjectOfType<Player1BodyController>();
+
         player2Body = GameObject.FindGameObjectWithTag("Player2_body");
         rb = GetComponent<Rigidbody>();
-        rb.transform.position = player2Body.transform.position +
-                new Vector3(offset.x, 0, offset.z);
         if (player2BodyCtrl == null)
         {
             Debug.Log("Cannot find controller");
@@ -32,26 +33,33 @@ public class Player2GloveController : MonoBehaviour
             StartCoroutine(Punch(0.1f, 1.25f, transform.forward));
         }
     }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player1_body")
+        {
+            Debug.Log("enter");
+            player1BodyCtrl.takeDamage(player2BodyCtrl.GetMovement());
+        }
+    }
     void FixedUpdate()
     {
         Vector3 movement = player2BodyCtrl.GetMovement();
 
         if (movement.magnitude != 0)
         {
-			//set position in direction ball is travelling
+            //set position in direction ball is travelling
             rb.transform.position = player2Body.transform.position +
                 new Vector3(movement.normalized.x * offset.x, 0, movement.normalized.z * offset.z);
             oldMovement = movement;
-            Debug.Log(movement);
-			//set rotation to direction ball is travelling
+            //set rotation to direction ball is travelling
             rb.transform.rotation = Quaternion.LookRotation(movement);
         }
         else
         {
-			//set position to previous direction travelled if no movement, same for rotation
+            //set position to previous direction travelled if no movement, same for rotation
             rb.transform.position = player2Body.transform.position +
                 new Vector3(oldMovement.normalized.x * offset.x, 0, oldMovement.normalized.z * offset.z);
-            rb.transform.rotation = Quaternion.LookRotation(oldMovement);
+            // rb.transform.rotation = Quaternion.LookRotation(oldMovement);
         }
 
         // rb.transform.Translate(movement * 20 * Time.deltaTime, Space.World);
@@ -63,10 +71,8 @@ public class Player2GloveController : MonoBehaviour
         var timer = 0.0f;
         var orgPos = rb.transform.position;
         direction.Normalize();
-        Debug.Log("Above the loop");
         while (timer <= time)
         {
-            Debug.Log("----");
             rb.transform.position = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
             yield return null;
             timer += Time.deltaTime;

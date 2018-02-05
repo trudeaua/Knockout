@@ -51,10 +51,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Powerup.cs" />
      <Compile Include="Assets\Scripts\Player1BodyController.cs" />
      <Compile Include="Assets\Scripts\Player1GloveController.cs" />
      <Compile Include="Assets\Scripts\Player2BodyController.cs" />
      <Compile Include="Assets\Scripts\Player2GloveController.cs" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\wood-877000.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\patch-924648.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\brick-957827.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\wood-877365.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\stone-805287.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\brick-957823.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\brick-807728.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\wood-938698.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\README.txt" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\wall-846013.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\tile-846018.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\bricks-868344.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\texture-709723.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\wall-617961.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\wall-846015.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\wood-731407.shader" />
+     <None Include="Assets\HighQualityBricks&amp;Walls\Shaders\shading-671263.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
