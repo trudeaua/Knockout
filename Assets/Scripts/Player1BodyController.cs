@@ -9,7 +9,7 @@ public class Player1BodyController : MonoBehaviour
     public int forceConst;
     private float moveHorizontal;
     private float moveVertical;
-    private int damageTaken = 0;
+    private int damageTaken = 1;
     private Player2GloveController player2Glove;
 
     private bool canJump;
@@ -55,7 +55,6 @@ public class Player1BodyController : MonoBehaviour
     public void takeDamage(Vector3 punchDir)
     {
         Debug.Log("damage on p1");
-        damageTaken += 100;
-        rb.AddForce(punchDir.x * damageTaken, 0, punchDir.z * damageTaken);
+        damageTaken += 3;
     }
 }

@@ -73,8 +73,8 @@ GameObject:
   - component: {fileID: 4567693773916958}
   - component: {fileID: 135066299520605740}
   - component: {fileID: 114394828870245394}
-  - component: {fileID: 54027513080642040}
   - component: {fileID: 23431983251973080}
+  - component: {fileID: 54666386312153816}
   m_Layer: 0
   m_Name: player1_glove2
   m_TagString: Player1_glove
@@ -247,7 +247,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1082372682135620}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54027513080642040
+--- !u!54 &54666386312153816
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -260,7 +260,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!54 &54741990007494154
 Rigidbody:
@@ -309,7 +309,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1936360694436818}
   m_Material: {fileID: 13400000, guid: d1391e31df1e1374e99bfed97188993a, type: 2}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.002

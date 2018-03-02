@@ -14,12 +14,13 @@ public class Player2GloveController : MonoBehaviour
     private bool punching = false;
     private Vector3 oldMovement;
     private Vector3 punchVector;
+    private Rigidbody rb;
     // Use this for initialization
     void Start()
     {
         player2BodyCtrl = GameObject.FindObjectOfType<Player2BodyController>();
         player1BodyCtrl = GameObject.FindObjectOfType<Player1BodyController>();
-
+        rb = GetComponent<Rigidbody>();
         player2Body = GameObject.FindGameObjectWithTag("Player2_body");
         // rb = GetComponent<Rigidbody>();
         if (player2BodyCtrl == null)
@@ -60,20 +61,23 @@ public class Player2GloveController : MonoBehaviour
     //got Punch() from https://answers.unity.com/questions/737209/punching-objects.html
     IEnumerator Punch(float time, float distance, Vector3 direction)
     {
-        punching = true;
+         punching = true;
         var timer = 0.0f;
         var orgPos = transform.position;
-        Collider c = GetComponent<Collider>();
-        Debug.Log(c.contactOffset);
         direction.Normalize();
+        rb.AddForce(direction.x, 0, direction.y);
+        Vector3 vec;
         while (timer <= time)
         {
-            transform.position = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
+            vec = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
+            transform.position = vec;
+            rb.transform.position = vec;
             yield return null;
             timer += Time.deltaTime;
         }
         punchVector = transform.position - orgPos;
         transform.position = orgPos;
+        rb.transform.position = orgPos;
         punching = false;
     }
     public Vector3 GetPunchVector()

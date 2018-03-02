@@ -9,7 +9,7 @@ public class Player2BodyController : MonoBehaviour
     public int forceConst;
     private float moveHorizontal;
     private float moveVertical;
-    private int damageTaken = 0;
+    private int damageTaken = 1;
     private Player1GloveController player1Glove;
 
     // Use this for initialization
@@ -54,6 +54,5 @@ public class Player2BodyController : MonoBehaviour
     {
         Debug.Log("damage on p2");
         damageTaken += 3;
-        rb.AddForce(punchDir.x * damageTaken, 0, punchDir.z * damageTaken);
     }
 }

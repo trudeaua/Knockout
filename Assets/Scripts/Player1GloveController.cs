@@ -14,12 +14,13 @@ public class Player1GloveController : MonoBehaviour
     private bool punching = false;
     private Vector3 oldMovement;
     private Vector3 punchVector;
+    private Rigidbody rb;
     // Use this for initialization
     void Start()
     {
         player1BodyCtrl = GameObject.FindObjectOfType<Player1BodyController>();
         player2BodyCtrl = GameObject.FindObjectOfType<Player2BodyController>();
-
+        rb = GetComponent<Rigidbody>();
         player1Body = GameObject.FindGameObjectWithTag("Player1_body");
         // rb = GetComponent<Rigidbody>();
         if (player1BodyCtrl == null)
@@ -63,21 +64,23 @@ public class Player1GloveController : MonoBehaviour
         punching = true;
         var timer = 0.0f;
         var orgPos = transform.position;
-        Collider c = GetComponent<Collider>();
-        c.transform.position = orgPos;
         direction.Normalize();
+        rb.AddForce(direction.x, 0, direction.y);
+        Vector3 vec;
         while (timer <= time)
         {
-            transform.position = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
-            c.transform.position = transform.position;
+            vec = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
+            transform.position = vec;
             yield return null;
             timer += Time.deltaTime;
         }
         punchVector = transform.position - orgPos;
         transform.position = orgPos;
+        rb.transform.position = orgPos;
         punching = false;
     }
-    public Vector3 GetPunchVector() {
+    public Vector3 GetPunchVector()
+    {
         return punchVector;
     }
 }
