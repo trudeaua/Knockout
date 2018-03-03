@@ -19,8 +19,6 @@ public class Player2GloveController : MonoBehaviour
     void Start()
     {
         player2BodyCtrl = GameObject.FindObjectOfType<Player2BodyController>();
-        player1BodyCtrl = GameObject.FindObjectOfType<Player1BodyController>();
-        rb = GetComponent<Rigidbody>();
         player2Body = GameObject.FindGameObjectWithTag("Player2_body");
         // rb = GetComponent<Rigidbody>();
         if (player2BodyCtrl == null)
@@ -28,11 +26,15 @@ public class Player2GloveController : MonoBehaviour
             Debug.Log("Cannot find controller");
         }
     }
+
+    void Awake() {
+        rb = GetComponent<Rigidbody>();
+    }
     void Update()
     {
         if (!punching && Input.GetKeyDown(KeyCode.LeftShift))
         {
-            StartCoroutine(Punch(0.1f, 1.25f, transform.forward));
+            StartCoroutine(Punch(0.5f, 1.25f, transform.forward));
         }
     }
     void FixedUpdate()
@@ -53,7 +55,7 @@ public class Player2GloveController : MonoBehaviour
             //set position to previous direction travelled if no movement, same for rotation
             transform.position = player2Body.transform.position +
                 new Vector3(oldMovement.normalized.x * offset.x, 0, oldMovement.normalized.z * offset.z);
-            // rb.transform.rotation = Quaternion.LookRotation(oldMovement);
+            transform.rotation = Quaternion.LookRotation(oldMovement);
         }
 
         // rb.transform.Translate(movement * 20 * Time.deltaTime, Space.World);
@@ -61,23 +63,18 @@ public class Player2GloveController : MonoBehaviour
     //got Punch() from https://answers.unity.com/questions/737209/punching-objects.html
     IEnumerator Punch(float time, float distance, Vector3 direction)
     {
-         punching = true;
+        punching = true;
         var timer = 0.0f;
         var orgPos = transform.position;
         direction.Normalize();
-        rb.AddForce(direction.x, 0, direction.y);
-        Vector3 vec;
         while (timer <= time)
         {
-            vec = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
-            transform.position = vec;
-            rb.transform.position = vec;
+            rb.MovePosition(orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction);
+            // transform.position = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
             yield return null;
             timer += Time.deltaTime;
         }
-        punchVector = transform.position - orgPos;
         transform.position = orgPos;
-        rb.transform.position = orgPos;
         punching = false;
     }
     public Vector3 GetPunchVector()

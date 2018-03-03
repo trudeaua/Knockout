@@ -10,6 +10,8 @@ TagManager:
   - Player2
   - Player2_body
   - Player2_glove
+  - P1HealthText
+  - P2HealthText
   layers:
   - Default
   - TransparentFX

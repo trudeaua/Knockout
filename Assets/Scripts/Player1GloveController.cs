@@ -9,7 +9,6 @@ public class Player1GloveController : MonoBehaviour
     public Vector3 offset;
 
     private Player1BodyController player1BodyCtrl;
-    private Player2BodyController player2BodyCtrl;
     private GameObject player1Body;
     private bool punching = false;
     private Vector3 oldMovement;
@@ -19,8 +18,6 @@ public class Player1GloveController : MonoBehaviour
     void Start()
     {
         player1BodyCtrl = GameObject.FindObjectOfType<Player1BodyController>();
-        player2BodyCtrl = GameObject.FindObjectOfType<Player2BodyController>();
-        rb = GetComponent<Rigidbody>();
         player1Body = GameObject.FindGameObjectWithTag("Player1_body");
         // rb = GetComponent<Rigidbody>();
         if (player1BodyCtrl == null)
@@ -28,11 +25,16 @@ public class Player1GloveController : MonoBehaviour
             Debug.Log("Cannot find controller");
         }
     }
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+
+    }
     void Update()
     {
         if (!punching && Input.GetKeyDown(KeyCode.RightShift))
         {
-            StartCoroutine(Punch(0.1f, 1.25f, transform.forward));
+            StartCoroutine(Punch(0.5f, 1.25f, transform.forward));
         }
     }
     void FixedUpdate()
@@ -53,7 +55,7 @@ public class Player1GloveController : MonoBehaviour
             //set position to previous direction travelled if no movement, same for rotation
             transform.position = player1Body.transform.position +
                 new Vector3(oldMovement.normalized.x * offset.x, 0, oldMovement.normalized.z * offset.z);
-            // rb.transform.rotation = Quaternion.LookRotation(oldMovement);
+            transform.rotation = Quaternion.LookRotation(oldMovement);
         }
 
         // rb.transform.Translate(movement * 20 * Time.deltaTime, Space.World);
@@ -65,18 +67,14 @@ public class Player1GloveController : MonoBehaviour
         var timer = 0.0f;
         var orgPos = transform.position;
         direction.Normalize();
-        rb.AddForce(direction.x, 0, direction.y);
-        Vector3 vec;
         while (timer <= time)
         {
-            vec = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
-            transform.position = vec;
+            rb.MovePosition(orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction);
+            // transform.position = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
             yield return null;
             timer += Time.deltaTime;
         }
-        punchVector = transform.position - orgPos;
         transform.position = orgPos;
-        rb.transform.position = orgPos;
         punching = false;
     }
     public Vector3 GetPunchVector()

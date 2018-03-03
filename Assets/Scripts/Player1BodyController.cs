@@ -5,11 +5,15 @@ using UnityEngine;
 public class Player1BodyController : MonoBehaviour
 {
     private Rigidbody rb;
+    private Collider cdr;
+    private GameController gameController;
+
     public float speed;
     public int forceConst;
     private float moveHorizontal;
     private float moveVertical;
-    private int damageTaken = 1;
+    private float damageTaken = 0;
+    private Player1GloveController player1Glove;
     private Player2GloveController player2Glove;
 
     private bool canJump;
@@ -17,7 +21,10 @@ public class Player1BodyController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        cdr = GetComponent<Collider>();
         player2Glove = GameObject.FindObjectOfType<Player2GloveController>();
+        player1Glove = GameObject.FindObjectOfType<Player1GloveController>();
+        gameController = GameObject.FindObjectOfType<GameController>();
     }
 
     // Update is called once per frame
@@ -27,6 +34,11 @@ public class Player1BodyController : MonoBehaviour
         {
             Jump();
         }
+        if (rb.position.y <= -15) {
+            gameController.GameOver(1);
+            Destroy(gameObject);
+            Destroy(player1Glove);
+        }
     }
     void FixedUpdate()
     {
@@ -35,12 +47,15 @@ public class Player1BodyController : MonoBehaviour
 
         rb.AddForce(moveHorizontal * speed, 0, moveVertical * speed);
     }
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
-        if (other.tag == "Player2_glove")
+        Debug.Log("collision enter");
+
+        if (collision.collider.tag == "Player2_glove")
         {
             Debug.Log("enter");
             takeDamage(player2Glove.GetPunchVector());
+            //takeDamage(collision.transform.position);
         }
     }
     public Vector3 GetMovement()
@@ -55,6 +70,12 @@ public class Player1BodyController : MonoBehaviour
     public void takeDamage(Vector3 punchDir)
     {
         Debug.Log("damage on p1");
-        damageTaken += 3;
+        damageTaken += 3.0f;
+        if (cdr.material.bounciness < 0.95f)
+        {
+            cdr.material.bounciness += 0.05f;
+        }
+        gameController.DamageP1(damageTaken);
+        rb.AddExplosionForce(damageTaken, punchDir, 5.0f, 3.0f);
     }
 }

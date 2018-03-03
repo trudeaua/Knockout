@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: b66e13772374db44faeb7cd568ddca9c
+timeCreated: 1520036813
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Cyberspace Raceway
+  fontNames:
+  - Cyberspace Raceway
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 7a4ffecbe9c1c314badf8dfc332f6045, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
