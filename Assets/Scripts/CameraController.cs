@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//got this script from https://unity3d.com/learn/tutorials/projects/tanks-tutorial/camera-control?playlist=20081
+//got this camera controller script from https://unity3d.com/learn/tutorials/projects/tanks-tutorial/camera-control?playlist=20081
 public class CameraController : MonoBehaviour
 {
     public float m_DampTime;                 // Approximate time for the camera to refocus.

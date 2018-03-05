@@ -13,28 +13,24 @@ public class Player2GloveController : MonoBehaviour
     private GameObject player2Body;
     private bool punching = false;
     private Vector3 oldMovement;
-    private Vector3 punchVector;
     private Rigidbody rb;
     // Use this for initialization
     void Start()
     {
         player2BodyCtrl = GameObject.FindObjectOfType<Player2BodyController>();
         player2Body = GameObject.FindGameObjectWithTag("Player2_body");
+        rb = GetComponent<Rigidbody>();
         // rb = GetComponent<Rigidbody>();
         if (player2BodyCtrl == null)
         {
             Debug.Log("Cannot find controller");
         }
     }
-
-    void Awake() {
-        rb = GetComponent<Rigidbody>();
-    }
     void Update()
     {
-        if (!punching && Input.GetKeyDown(KeyCode.LeftShift))
+        if (!punching && Input.GetKeyDown(KeyCode.RightShift))
         {
-            StartCoroutine(Punch(0.5f, 1.25f, transform.forward));
+            StartCoroutine(Punch(0.1f, 1.25f, transform.forward));
         }
     }
     void FixedUpdate()
@@ -64,21 +60,19 @@ public class Player2GloveController : MonoBehaviour
     IEnumerator Punch(float time, float distance, Vector3 direction)
     {
         punching = true;
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
         var timer = 0.0f;
         var orgPos = transform.position;
         direction.Normalize();
         while (timer <= time)
         {
-            rb.MovePosition(orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction);
-            // transform.position = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
+            // rb.MovePosition(orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction);
+            transform.position = orgPos + (Mathf.Sin(timer / time * Mathf.PI) + 1.0f) * direction;
             yield return null;
             timer += Time.deltaTime;
         }
         transform.position = orgPos;
         punching = false;
-    }
-    public Vector3 GetPunchVector()
-    {
-        return punchVector;
     }
 }

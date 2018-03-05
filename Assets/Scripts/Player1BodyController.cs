@@ -5,9 +5,7 @@ using UnityEngine;
 public class Player1BodyController : MonoBehaviour
 {
     private Rigidbody rb;
-    private Collider cdr;
     private GameController gameController;
-
     public float speed;
     public int forceConst;
     private float moveHorizontal;
@@ -15,13 +13,13 @@ public class Player1BodyController : MonoBehaviour
     private float damageTaken = 0;
     private Player1GloveController player1Glove;
     private Player2GloveController player2Glove;
-
-    private bool canJump;
+    public int punchForce;
+    private int numJumps = 0;
+    private bool movementEnabled;
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        cdr = GetComponent<Collider>();
         player2Glove = GameObject.FindObjectOfType<Player2GloveController>();
         player1Glove = GameObject.FindObjectOfType<Player1GloveController>();
         gameController = GameObject.FindObjectOfType<GameController>();
@@ -30,12 +28,13 @@ public class Player1BodyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && rb.position.y <= 0.5 && rb.position.y >= 0)
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             Jump();
         }
-        if (rb.position.y <= -15) {
-            gameController.GameOver(1);
+        if (rb.position.y <= -15)
+        {
+            gameController.GameOver(2);
             Destroy(gameObject);
             Destroy(player1Glove);
         }
@@ -44,38 +43,66 @@ public class Player1BodyController : MonoBehaviour
     {
         moveHorizontal = Input.GetAxis("P1_horizontal");
         moveVertical = Input.GetAxis("P1_vertical");
+        if (movementEnabled)
+        {
 
-        rb.AddForce(moveHorizontal * speed, 0, moveVertical * speed);
+            rb.AddForce(moveHorizontal * speed, 0, moveVertical * speed);
+        }
     }
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log("collision enter");
 
         if (collision.collider.tag == "Player2_glove")
+
         {
             Debug.Log("enter");
-            takeDamage(player2Glove.GetPunchVector());
-            //takeDamage(collision.transform.position);
+            Vector3 force = transform.position - collision.collider.transform.position;
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.Play();
+            takeDamage(force * punchForce);
+            //takeDamage(collision.rigidbody.position);
         }
+
     }
+
     public Vector3 GetMovement()
     {
         return new Vector3(moveHorizontal, 0, moveVertical);
     }
     private void Jump()
     {
-        rb.AddForce(0, forceConst, 0, ForceMode.Impulse);
+        bool grounded = isGrounded();
+        if (numJumps < 1)
+        {
+            rb.AddForce(0, forceConst, 0, ForceMode.Impulse);
+            numJumps += 1;
+        }
+        if (grounded)
+        {
+            numJumps = 0;
+        }
     }
 
     public void takeDamage(Vector3 punchDir)
     {
         Debug.Log("damage on p1");
-        damageTaken += 3.0f;
-        if (cdr.material.bounciness < 0.95f)
+        if (damageTaken < 996)
         {
-            cdr.material.bounciness += 0.05f;
+            damageTaken += 3.0f;
         }
         gameController.DamageP1(damageTaken);
-        rb.AddExplosionForce(damageTaken, punchDir, 5.0f, 3.0f);
+        // rb.AddExplosionForce(damageTaken, punchDir, 5.0f, 3.0f);
+        rb.AddForce(punchDir * damageTaken, ForceMode.Acceleration);
+    }
+    bool isGrounded()
+    {
+        Collider collider = GetComponent<Collider>();
+        return Physics.Raycast(transform.position, -Vector3.up, collider.bounds.extents.y + 0.1f);
+    }
+
+    public void EnableMovement()
+    {
+        movementEnabled = true;
     }
 }

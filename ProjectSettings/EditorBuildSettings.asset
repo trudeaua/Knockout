@@ -4,4 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/StageSelect.unity
+    guid: a16134ecb46109d4aad4ae006420c386
+  - enabled: 1
+    path: Assets/Scenes/GrassStage.unity
+    guid: c950503a7388cd84f9f6be3feb5375f7
+  - enabled: 1
+    path: Assets/Scenes/IceStage.unity
+    guid: 0f4493f28a427634a831c1ef05b11ba5
+  - enabled: 1
+    path: Assets/Scenes/SandStage.unity
+    guid: 6639f99295f7d8240972e4ed369823b4
